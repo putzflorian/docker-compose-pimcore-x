@@ -32,3 +32,8 @@ On some machines docker has problems with the relative symlinked (static) files.
 docker-compose exec -it pimcorex-php-fpm bash
 chown www-data: . -R 
 ```
+
+Optional set Permissions to 777 if you work on Windows in an WSL Environment
+```bash
+chmod 777 . -R 
+```
