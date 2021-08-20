@@ -28,6 +28,8 @@ services:
     nginx:
         image: nginx:latest
         container_name: ${PROJECT_NAME}-nginx
+        depends_on:
+            - php-fpm
         ports:
             - ${WEB_PORT_HOST}:${WEB_PORT_CONTAINER}
         volumes:
@@ -49,6 +51,33 @@ services:
             - ./docker-config/www.conf:/usr/local/etc/php-fpm.d/www.conf
             - ./docker-config/30-pimcore-php.ini:/usr/local/etc/php/conf.d/30-pimcore-php.ini
         restart: always
+        networks:
+            - ${PROJECT_NAME}
+
+    nginx-debug:
+        image: nginx:latest
+        container_name: ${PROJECT_NAME}-nginx-debug
+        depends_on:
+            - php-fpm-debug
+        ports:
+            - "2006:80"
+        volumes:
+            - ./www:/var/www/html
+            - ./docker-config/nginx-pimcore-debug.conf:/etc/nginx/nginx.conf
+        networks:
+            - ${PROJECT_NAME}
+
+    php-fpm-debug:
+        image: pimcore/pimcore:PHP8.0-fpm-buster-debug
+        container_name: ${PROJECT_NAME}-php-fpm-debug
+        environment:
+            - "TZ=Europe/Berlin"
+        depends_on:
+            - mariadb
+        volumes:
+            - ./www:/var/www/html
+            - ./docker-config/www.conf:/usr/local/etc/php-fpm.d/www.conf
+            - ./docker-config/30-pimcore-php.ini:/usr/local/etc/php/conf.d/30-pimcore-php.ini
         networks:
             - ${PROJECT_NAME}
 

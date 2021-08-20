@@ -25,6 +25,10 @@ After the installer is finished, you can open in your Browser:
 * Frontend: http://localhost:9090
 * Backend: http://localhost:9090/admin
 
+### Debug with XDEBUG
+* Frontend: http://localhost:2006
+* * Backend: http://localhost:2006/admin
+
 #### File permissions 
 On some machines docker has problems with the relative symlinked (static) files. Run those commands in your `pimcore-php` container 
 
