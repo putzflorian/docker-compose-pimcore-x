@@ -6,6 +6,7 @@ services:
         image: redis:alpine
         container_name: ${PROJECT_NAME}-redis
         restart: always
+        command: [ redis-server, --maxmemory 128mb, --maxmemory-policy volatile-lru, --save "" ]
         networks:
             - ${PROJECT_NAME}
 
